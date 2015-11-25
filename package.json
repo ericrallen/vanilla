@@ -1,0 +1,11 @@
+{
+  "name": "vanilla",
+  "version": "0.0.1",
+  "description": "Vanilla JS library we'll use to explore jQuery methods and patterns",
+  "main": "vanilla.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@ericrallen",
+  "license": "MIT"
+}
