@@ -9,7 +9,7 @@
     */
 
     //this will be the basis of our library, much like jQuery's `jQuery` function (often aliased as `$`)
-    var $v = function(selector) {
+    const $v = function(selector) {
         //if this constructor was called without the `new` keyword, we should do that
         if(this === window) {
             return new $v(selector);
@@ -32,8 +32,8 @@
 
     //this utility will strip a `.` or `#` from the beginning of a string
     //we'll use it for times when we want an id or class name as a string but the user might have passed us a selector string like `#id` or `.class`
-    $v.fn.utils.convertSelectorToString = function(str) {
-        var checkCharacter = str[0];
+    $v.fn.utils.convertSelectorToString = (str) => {
+        const checkCharacter = str[0];
 
         switch(checkChracter) {
             case '.':
@@ -45,19 +45,19 @@
     };
 
     //this utility will take an element and split it's `className` attribute into an array
-    $v.fn.utils.getClassList = function(element) {
+    $v.fn.utils.getClassList = (element) => {
         return this.utils.convertDelimitedStringToArray(element.className);
     };
 
     //this utility will take an array of classes and return the joined class list
-    $v.fn.utils.createClassList = function(classes) {
+    $v.fn.utils.createClassList = (classes) => {
         return classes.join(' ');
     };
 
     //this utility checks to see if an array contains the specified value
-    $v.fn.utils.arrayContains = function(array, search, index) {
+    $v.fn.utils.arrayContains = (array, search, index = false) => {
         //if we are looking for a string, we'll want to trim it just in case there were leftover spaces
-        var atIndex = array.indexOf((typeof search === 'string' ? search.trim() : search));
+        const atIndex = array.indexOf((typeof search === 'string' ? search.trim() : search));
 
         //if item was found in array
        if(atIndex !== -1) {
@@ -71,16 +71,9 @@
     //this utility takes a string and converts it into an array
     //this can be done with a specified delimiter or it will use commas (if present in the string) or spaces
     //it iterates through the array and trims any strings before returning it
-    $v.fn.utils.convertDelimitedStringToArray = function(str, delimiter) {
-        //declare a variable to store our array of strings
-        var items;
-
-        //if a delimiter was provided
-        if(typeof delimiter !== 'undefined') {
-            items = str.split(delimiter);
-        } else {
-            items = str.split((str.indexOf(',') !== -1 ? ',' : ' '));
-        }
+    $v.fn.utils.convertDelimitedStringToArray = (str, delimiter = false) => {
+        //split string on delimiter, comma, or space
+        let items = str.split((delimiter ? delimiter : (str.indexOf(',') !== -1 ? ',' : ' ')));
 
         //iterate through our items array and trim any strings
         //then return the new array
@@ -93,12 +86,12 @@
 
     //replaces the current collection with a new collection created by running `querySelectorAll()` from each item in the collection and looking for
     //a specified selector
-    $v.fn.find = function(str) {
-        var elements = this.elements;
+    $v.fn.find = (str) => {
+        const elements = this.elements;
 
         this.elements = [];
 
-        elements.forEach(function(item) {
+        elements.forEach((item) => {
             this.elements.concat([].slice.call(item.querySelectorAll(str)));
         });
 
@@ -109,74 +102,52 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `hasClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.hasClass = function() {
-        //declare variable we'll use to store an array of class names
-        var classes;
-
-        //initialize empty array to store our arguments
-        var args = [];
-
-        //convert our arguments Array-like object into an actual array we can work with
-        for(var a = 0; a < arguments.length; a++) {
-            args.push(arguments[a]);
-        }
-
+    $v.fn.hasClass = (...args) => {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        classes = args.map(function(item) {
+        let classes = args.map(function(item) {
             return this.utils.convertDelimitedStringToArray(item);
-        }, this);
+        });
 
         //iterate through the classes we need to check for
         //we are using `.every()` so that we can break out of the loop when the class is not found on an element
         //we return a boolean from this method, so it is not eligible for any chaining after beng called
-        return classes.every(function(str) {
+        return classes.every( (str) => {
             //iterate through the elements in our collection
-            return this.elements.every(function(item) {
+            return this.elements.every( (item) => {
                 if(this.utils.arrayContains(this.utils.getClassList(item), this.utils.convertSelectorToString(str))) {
                     return false;
                 }
 
                 return true;
-            }, this);
-        }, this);
+            });
+        });
     };
 
     //method for adding a class to elements in collection
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.addClass = function(str) {
-        //declare variable we'll use to store an array of class names
-        var classes;
-
-        //initialize empty array to store our arguments
-        var args = [];
-
-        //convert our arguments Array-like object into an actual array we can work with
-        for(var a = 0; a < arguments.length; a++) {
-            args.push(arguments[a]);
-        }
-
+    $v.fn.addClass = (...args) => {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        classes = args.map(function(item) {
+        let classes = args.map( (item) => {
             return this.utils.convertDelimitedStringToArray(item);
-        }, this);
+        });
 
         //iterate through the classes we need to check for
         //we are using `.every()` so that we can break out of the loop when the class is not found on an element
-        classes.forEach(function(str) {
+        classes.forEach( (str) => {
             //iterate through the elements in our collection
-            this.elements.forEach(function(item, index, array) {
+            this.elements.forEach( (item, index, array) => {
                 //get class list
                 //we cache this in it's own variable so we can use it for a push call later on
-                var classList = this.utils.getClassList(item);
+                let classList = this.utils.getClassList(item);
 
                 //check to see if our this item already has the class, add it if not
                 if(!this.utils.arrayContains(classList, this.utils.convertSelectorToString(str))) {
                     array[index].className = this.utils.createClassList(classList.push(str));
                 }
-            }, this);
-        }, this);
+            });
+        });
 
         //return reference to `$v` for method chaining
         return this;
@@ -186,43 +157,32 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.removeClass = function() {
-        //declare variable we'll use to store an array of class names
-        var classes;
-
-        //initialize empty array to store our arguments
-        var args = [];
-
-        //convert our arguments Array-like object into an actual array we can work with
-        for(var a = 0; a < arguments.length; a++) {
-            args.push(arguments[a]);
-        }
-
+    $v.fn.removeClass = (...args) => {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        classes = args.map(function(item) {
+        let classes = args.map( (item) => {
             return this.utils.convertDelimitedStringToArray(item);
-        }, this);
+        });
 
         //iterate through the classes we need to check for
         //we are using `.every()` so that we can break out of the loop when the class is not found on an element
-        classes.forEach(function(str) {
+        classes.forEach( (str) => {
             //iterate through the elements in our collection
-            this.elements.forEach(function(item, index, array) {
+            this.elements.forEach( (item, index, array) => {
                 //get class list
                 //we cache this in it's own variable so we can use it for a splice call later on
-                var classList = this.utils.getClassList(item);
+                let classList = this.utils.getClassList(item);
 
                 //check to see if class exists in class list
                 //we cache this in it's own variable so we can use it for a splice call later on
-                var removeIndex = this.utils.arrayContains(classList, str, true);
+                const removeIndex = this.utils.arrayContains(classList, str, true);
 
                 //if the specified class was found in this element's class list
                 if(removeIndex !== -1) {
                     //remove it from the class list
                     array[index].className = this.utils.createClassList(classList.splice(removeIndex, 1));
                 }
-            }, this);
-        }, this);
+            });
+        });
 
         //return reference to `$v` for method chaining
         return this;
@@ -232,42 +192,31 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.toggleClass = function() {
-        //declare variable we'll use to store an array of class names
-        var classes;
-
-        //initialize empty array to store our arguments
-        var args = [];
-
-        //convert our arguments Array-like object into an actual array we can work with
-        for(var a = 0; a < arguments.length; a++) {
-            args.push(arguments[a]);
-        }
-
+    $v.fn.toggleClass = (...args) => {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        classes = args.map(function(item) {
+        let classes = args.map( (item) => {
             return this.utils.convertDelimitedStringToArray(item);
-        }, this);
+        });
 
         //iterate through the classes we need to check for
         //we are using `.every()` so that we can break out of the loop when the class is not found on an element
-        classes.forEach(function(str) {
-            this.elements.forEach(function(item, index, array) {
+        classes.forEach( (str) => {
+            this.elements.forEach( (item, index, array) => {
                 //get class list
                 //we cache this in it's own variable so we can use it for a splice or push call later on
-                var classList = this.utils.getClassList(item);
+                let classList = this.utils.getClassList(item);
 
                 //check to see if class exists in class list
                 //we cache this in it's own variable so we can use it for a splice call later on
-                var toggleIndex = this.utils.arrayContains(classList, str, true);
+                const toggleIndex = this.utils.arrayContains(classList, str, true);
 
                 if(toggleIndex !== -1) {
                     array[index].className = this.utils.createClassList(classList.push(str));
                 } else {
                     array[index].className = this.utils.createClassList(classList.splice(toggleIndex, 1));
                 }
-            }, this);
-        }, this);
+            });
+        });
 
         //return reference to `$v` for method chaining
         return this;
