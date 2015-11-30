@@ -111,7 +111,7 @@
     $v.fn.utils.mergeObjects = (container, extendWith, deep = false) => {
         //if we need to do a deep merge, return the deepMergeObjects() utility method
         if(deep) {
-            return this.utils.deepMergeObjects(container, extendWith);
+            return this.deepMergeObjects(container, extendWith);
         }
 
         //use Object.assign for a nice shallow merge
@@ -131,7 +131,7 @@
                     //if this property is an object
                     if(typeof extendWith[prop] === 'object') {
                         //recursively deep merge the object before setting our property's value
-                        container[prop] = this.fn.utils.deepMergeObjects((container[prop] ? container[prop] : {}), extendWith[prop]);
+                        container[prop] = this.deepMergeObjects((container[prop] ? container[prop] : {}), extendWith[prop]);
                     //otherwise, we'll just set the container object's property to the value of the extension object's property
                     } else {
                         container[prop] = extendWith[prop];
@@ -332,7 +332,7 @@
     //will return all data attributes when called without either parameter
     $v.fn.data = (attribute, value) => {
         //return the result of `$v.attr()` with "data-" prepended to the provided attribute name
-        return this.attr((attribute.indexOf('data-') !== 0 ? 'data-' + attribute : attribute), value, true);
+        return this.attr((attribute && attribute.indexOf('data-') !== 0 ? 'data-' + attribute : attribute), value, true);
     };
 
     //method for extending an object with any other number of objects
@@ -340,7 +340,7 @@
     //the first object provided will be used as a container object, to prevent mutation, pass an empty object `{}` as your container
     //we aren't defining any parameters explicitly because the parameters are fluid in this case
     //this method returns an object and is not eligible for any method chaining
-    $v.fn.extend = (...objs) => {
+    $v.extend = (...objs) => {
         //initialize a boolean for whether we want to do a deep merge or not
         //this method performs a shallow merge by default
         let deep = false;
@@ -357,7 +357,7 @@
         //iterate through the rest of our argument objects
         objs.forEach( (item) => {
             //mutate our container object by merging it with this item in the array
-            container = this.utils.mergeObjects(container, item, deep);
+            container = this.fn.utils.mergeObjects(container, item, deep);
         });
 
         //return the merged objects as a single object

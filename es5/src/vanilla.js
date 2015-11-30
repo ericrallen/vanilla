@@ -125,7 +125,7 @@
     $v.fn.utils.mergeObjects = function(container, extendWith, deep) {
         //if we need to do a deep merge, return the deepMergeObjects() utility method
         if(deep) {
-            return this.utils.deepMergeObjects(container, extendWith);
+            return this.deepMergeObjects(container, extendWith);
         }
 
         //iterate through properties in `extendWith` object
@@ -133,7 +133,7 @@
             //make sure this is an enumerable property
             if(extendWith.hasOwnProperty(prop)) {
                 //set the value of our container object's property to the value of our extension object's property
-                container[prop] = item[prop];
+                container[prop] = extendWith[prop];
             }
         }
 
@@ -154,7 +154,7 @@
                     //if this property is an object
                     if(typeof extendWith[prop] === 'object') {
                         //recursively deep merge the object before setting our property's value
-                        container[prop] = this.fn.utils.deepMergeObjects((container[prop] ? container[prop] : {}), extendWith[prop]);
+                        container[prop] = this.deepMergeObjects((container[prop] ? container[prop] : {}), extendWith[prop]);
                     //otherwise, we'll just set the container object's property to the value of the extension object's property
                     } else {
                         container[prop] = extendWith[prop];
@@ -388,7 +388,7 @@
     //will return all data attributes when called without either parameter
     $v.fn.data = function(attribute, value) {
         //return the result of `$v.attr()` with "data-" prepended to the provided attribute name
-        return this.attr((attribute.indexOf('data-') !== 0 ? 'data-' + attribute : attribute), value, true);
+        return this.attr((attribute && attribute.indexOf('data-') !== 0 ? 'data-' + attribute : attribute), value, true);
     };
 
     //method for extending an object with any other number of objects
@@ -396,7 +396,7 @@
     //the first object provided will be used as a container object, to prevent mutation, pass an empty object `{}` as your container
     //we aren't defining any parameters explicitly because the parameters are fluid in this case
     //this method returns an object and is not eligible for any method chaining
-    $v.fn.extend = function() {
+    $v.extend = function() {
         //initialize empty array to store references to our objects that are currently in the  `arguments` object
         var objs = [];
 
@@ -422,7 +422,7 @@
         //iterate through the rest of our argument objects
         objs.forEach(function(item) {
             //mutate our container object by merging it with this item in the array
-            container = this.utils.mergeObjects(container, item, deep);
+            container = this.fn.utils.mergeObjects(container, item, deep);
         }, this);
 
         //return the merged objects as a single object
