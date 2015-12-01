@@ -11,7 +11,7 @@
     //this will be the basis of our library, much like jQuery's `jQuery` function (often aliased as `$`)
     const $v = function(selector) {
         //if this constructor was called without the `new` keyword, we should do that
-        if(this === window) {
+        if(this === window || typeof this === 'undefined') {
             return new $v(selector);
         }
 
@@ -32,10 +32,10 @@
 
     //this utility will strip a `.` or `#` from the beginning of a string
     //we'll use it for times when we want an id or class name as a string but the user might have passed us a selector string like `#id` or `.class`
-    $v.fn.utils.convertSelectorToString = (str) => {
+    $v.fn.utils.convertSelectorToString = function(str) {
         const checkCharacter = str[0];
 
-        switch(checkChracter) {
+        switch(checkCharacter) {
             case '.':
             case '#':
                 return str.substr(1);
@@ -45,17 +45,17 @@
     };
 
     //this utility will take an element and split it's `className` attribute into an array
-    $v.fn.utils.getClassList = (element) => {
-        return this.utils.convertDelimitedStringToArray(element.className);
+    $v.fn.utils.getClassList = function(element) {
+        return this.convertDelimitedStringToArray(element.className);
     };
 
     //this utility will take an array of classes and return the joined class list
-    $v.fn.utils.createClassList = (classes) => {
+    $v.fn.utils.createClassList = function(classes) {
         return classes.join(' ');
     };
 
     //this utility checks to see if an array contains the specified value
-    $v.fn.utils.arrayContains = (array, search, index = false) => {
+    $v.fn.utils.arrayContains = function(array, search, index = false) {
         //if we are looking for a string, we'll want to trim it just in case there were leftover spaces
         const atIndex = array.indexOf((typeof search === 'string' ? search.trim() : search));
 
@@ -71,21 +71,23 @@
     //this utility takes a string and converts it into an array
     //this can be done with a specified delimiter or it will use commas (if present in the string) or spaces
     //it iterates through the array and trims any strings before returning it
-    $v.fn.utils.convertDelimitedStringToArray = (str, delimiter = false) => {
+    $v.fn.utils.convertDelimitedStringToArray = function(str, delimiter = false) {
         //split string on delimiter, comma, or space
         let items = str.split((delimiter ? delimiter : (str.indexOf(',') !== -1 ? ',' : ' ')));
 
         //iterate through our items array and trim any strings
         //then return the new array
-        return items.forEach(function(item) {
+        items.forEach(function(item, index, array) {
             if(typeof item === 'string') {
-                item = item.trim();
+                array[index] = item.trim();
             }
         });
+
+        return items;
     };
 
     //this utility will take a node and return an object of it's attributes and values
-    $v.fn.utils.generateAttributesObject = (element, data = false) => {
+    $v.fn.utils.generateAttributesObject = function(element, data = false) {
         //intialize empty object to store our attribute values
         let returnAttrs = {};
 
@@ -108,7 +110,7 @@
 
     //this utility will take a container object and extend it with another object
     //`deep` is a Boolean that tells the utility whether it should copy deeply or not
-    $v.fn.utils.mergeObjects = (container, extendWith, deep = false) => {
+    $v.fn.utils.mergeObjects = function(container, extendWith, deep = false) {
         //if we need to do a deep merge, return the deepMergeObjects() utility method
         if(deep) {
             return this.deepMergeObjects(container, extendWith);
@@ -120,7 +122,7 @@
 
     //this utility will take a container object and extend it with another object
     //this is a deep copy
-    $v.fn.utils.deepMergeObjects = (container, extendWith) => {
+    $v.fn.utils.deepMergeObjects = function(container, extendWith) {
         //iterate through properties in `extendWith` object
         for(var prop in extendWith) {
             //check to see if this is an enumerable property of our extension object
@@ -155,7 +157,7 @@
 
     //replaces the current collection with a new collection created by running `querySelectorAll()` from each item in the collection and looking for
     //a specified selector
-    $v.fn.find = (str) => {
+    $v.fn.find = function(str) {
         const elements = this.elements;
 
         this.elements = [];
@@ -171,7 +173,7 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `hasClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.hasClass = (...args) => {
+    $v.fn.hasClass = function(...args) {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
         let classes = args.map(function(item) {
             return this.utils.convertDelimitedStringToArray(item);
@@ -196,10 +198,12 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.addClass = (...args) => {
+    $v.fn.addClass = function(...args) {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        let classes = args.map( (item) => {
-            return this.utils.convertDelimitedStringToArray(item);
+        let classes = [];
+
+        args.forEach( (item) => {
+            classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
         //iterate through the classes we need to check for
@@ -213,7 +217,9 @@
 
                 //check to see if our this item already has the class, add it if not
                 if(!this.utils.arrayContains(classList, this.utils.convertSelectorToString(str))) {
-                    array[index].className = this.utils.createClassList(classList.push(str));
+                    classList.push(str);
+
+                    array[index].className = this.utils.createClassList(classList);
                 }
             });
         });
@@ -226,7 +232,7 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.removeClass = (...args) => {
+    $v.fn.removeClass = function(...args) {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
         let classes = args.map( (item) => {
             return this.utils.convertDelimitedStringToArray(item);
@@ -261,7 +267,7 @@
     //we want the user to be able to pass in as many classes as they want, we'll acheive this in two ways
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
-    $v.fn.toggleClass = (...args) => {
+    $v.fn.toggleClass = function(...args) {
         //iterate through our new args array and split out any comma or space-delimited lists of class names
         let classes = args.map( (item) => {
             return this.utils.convertDelimitedStringToArray(item);
@@ -330,7 +336,7 @@
     //method for getting/setting a `data-` atrribute's value
     //calls the `$v.attr()` method, but prepends "data-" to the attribute name if necessary
     //will return all data attributes when called without either parameter
-    $v.fn.data = (attribute, value) => {
+    $v.fn.data = function(attribute, value) {
         //return the result of `$v.attr()` with "data-" prepended to the provided attribute name
         return this.attr((attribute && attribute.indexOf('data-') !== 0 ? 'data-' + attribute : attribute), value, true);
     };
@@ -340,7 +346,7 @@
     //the first object provided will be used as a container object, to prevent mutation, pass an empty object `{}` as your container
     //we aren't defining any parameters explicitly because the parameters are fluid in this case
     //this method returns an object and is not eligible for any method chaining
-    $v.extend = (...objs) => {
+    $v.extend = function(...objs) {
         //initialize a boolean for whether we want to do a deep merge or not
         //this method performs a shallow merge by default
         let deep = false;
