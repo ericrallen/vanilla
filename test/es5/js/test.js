@@ -1,0 +1,1 @@
+$v('.testing-p').addClass('green-text');

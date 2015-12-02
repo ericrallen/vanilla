@@ -1,5 +1,5 @@
     /* jshint esnext: true */
 
-    import $v from '../../es6/src/vanilla';
+    import $v from '../../../src/es2015/vanilla';
 
     $v('.testing-p').addClass('red-text');

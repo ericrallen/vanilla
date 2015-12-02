@@ -174,9 +174,12 @@
     //1: We will allow the `hasClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
     $v.fn.hasClass = function(...args) {
+       //initialize empty array for storing the classes we want to add
+        let classes = [];
+
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        let classes = args.map(function(item) {
-            return this.utils.convertDelimitedStringToArray(item);
+        args.forEach( (item) => {
+            classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
         //iterate through the classes we need to check for
@@ -199,9 +202,10 @@
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
     $v.fn.addClass = function(...args) {
-        //iterate through our new args array and split out any comma or space-delimited lists of class names
+        //initialize empty array for storing the classes we want to add
         let classes = [];
 
+        //iterate through our new args array and split out any comma or space-delimited lists of class names
         args.forEach( (item) => {
             classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
@@ -233,9 +237,12 @@
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
     $v.fn.removeClass = function(...args) {
+        //initialize empty array for storing the classes we want to add
+        let classes = [];
+
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        let classes = args.map( (item) => {
-            return this.utils.convertDelimitedStringToArray(item);
+        args.forEach( (item) => {
+            classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
         //iterate through the classes we need to check for
@@ -268,9 +275,12 @@
     //1: We will allow the `addClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
     $v.fn.toggleClass = function(...args) {
+        //initialize empty array for storing the classes we want to add
+        let classes = [];
+
         //iterate through our new args array and split out any comma or space-delimited lists of class names
-        let classes = args.map( (item) => {
-            return this.utils.convertDelimitedStringToArray(item);
+        args.forEach( (item) => {
+            classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
         //iterate through the classes we need to check for
