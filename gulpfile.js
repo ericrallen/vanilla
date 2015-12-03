@@ -55,7 +55,7 @@
                 suffix: '.min',
                 extname: '.js'
             }))
-            .pipe(gulp.dest('./test/js/dist'))
+            .pipe(gulp.dest('./test/es2015/js/dist'))
             .pipe(connect.reload());
         ;
     });
