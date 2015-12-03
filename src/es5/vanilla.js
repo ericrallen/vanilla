@@ -60,7 +60,7 @@
         var atIndex = array.indexOf((typeof search === 'string' ? search.trim() : search));
 
         //if item was found in array
-       if(atIndex !== -1) {
+        if(atIndex !== -1) {
             //return the index (if specified) or just a boolean
             return (index ? atIndex : true);
         }
@@ -195,6 +195,9 @@
     //1: We will allow the `hasClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
     $v.fn.hasClass = function() {
+        //initialize variable we'll use if we are looking at a specific element
+        var element;
+
         //declare variable we'll use to store an array of class names
         var classes = [];
 
@@ -205,18 +208,32 @@
             }, this);
         }
 
+        //if the first item in our classes array was an HTML Node
+        if(classes[0] && (classes[0].nodeName || classes[0].tagName)) {
+            //pull it out of the array and store it in the element variable we initialized above
+            element = classes.shift();
+        }
+
         //iterate through the classes we need to check for
         //we are using `.every()` so that we can break out of the loop when the class is not found on an element
         //we return a boolean from this method, so it is not eligible for any chaining after beng called
         return classes.every(function(str) {
-            //iterate through the elements in our collection
-            return this.elements.every(function(item) {
-                if(this.utils.arrayContains(this.utils.getClassList(item), this.utils.convertSelectorToString(str))) {
-                    return false;
-                }
+            if(!element) {
+                //iterate through the elements in our collection
+                return this.elements.every(function(item) {
+                    if(this.utils.arrayContains(this.utils.getClassList(item), this.utils.convertSelectorToString(str))) {
+                        return false;
+                    }
 
+                    return true;
+                }, this);
+            }
+
+            if(this.utils.arrayContains(this.utils.getClassList(element), this.utils.convertSelectorToString(str))) {
                 return true;
-            }, this);
+            }
+
+            return false;
         }, this);
     };
 
@@ -235,17 +252,16 @@
             }, this);
         }
 
-        //iterate through the classes we need to check for
-        //we are using `.every()` so that we can break out of the loop when the class is not found on an element
+        //iterate through the classes we need to add
         classes.forEach(function(str) {
             //iterate through the elements in our collection
             this.elements.forEach(function(item, index, array) {
-                //get class list
-                //we cache this in it's own variable so we can use it for a push call later on
-                var classList = this.utils.getClassList(item);
+                //check to see if this item already has the class, add it if not
+                if(!this.hasClass(item, this.utils.convertSelectorToString(str))) {
+                    //get class list
+                    //we cache this in it's own variable so we can use it for a push call later on
+                    var classList = this.utils.getClassList(item);
 
-                //check to see if our this item already has the class, add it if not
-                if(!this.utils.arrayContains(classList, this.utils.convertSelectorToString(str))) {
                     //add it to the class list
                     classList.push(this.utils.convertSelectorToString(str));
 
@@ -273,21 +289,20 @@
            }, this);
         }
 
-        //iterate through the classes we need to check for
-        //we are using `.every()` so that we can break out of the loop when the class is not found on an element
+        //iterate through the classes we need to remove
         classes.forEach(function(str) {
             //iterate through the elements in our collection
             this.elements.forEach(function(item, index, array) {
-                //get class list
-                //we cache this in it's own variable so we can use it for a splice call later on
-                var classList = this.utils.getClassList(item);
+                //check to see if this item already has the class, remove it if so
+                if(this.hasClass(item, this.utils.convertSelectorToString(str))) {
+                    //get class list
+                    //we cache this in it's own variable so we can use it for a push call later on
+                    var classList = this.utils.getClassList(item);
 
-                //check to see if class exists in class list
-                //we cache this in it's own variable so we can use it for a splice call later on
-                var removeIndex = this.utils.arrayContains(classList, this.utils.convertSelectorToString(str), true);
+                    //check to see if class exists in class list
+                    //we cache this in it's own variable so we can use it for a splice call later on
+                    var removeIndex = this.utils.arrayContains(classList, this.utils.convertSelectorToString(str), true);
 
-                //if the specified class was found in this element's class list
-                if(removeIndex !== -1) {
                     //remove it from the class list
                     classList.splice(removeIndex, 1);
 

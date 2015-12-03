@@ -1,4 +1,4 @@
-# Vanilla
+# Vanilla v1.1.1
 
 Vanilla is a jQuery-like library created for a series of Front-End workshops revolving around JavaScript.
 
@@ -26,7 +26,7 @@ In the workshops we will cover many things, including:
     - `every`
     - `some`
 - es2015 and transpiling with `babel`
-- `gulp`
+- task automation with `gulp`
 - How/Why jQuery does certain things:
     - How does method chaining work? (see:  Fluent Interface Pattern)
     - How does plugin extension work? (see:  Prototypal Inheritance)
@@ -49,7 +49,7 @@ Vanilla also does not:
 
 ## What Vanilla Does Do
 
-Vanilla currently recreates the following jQuery methods in an es5 JavaScript file that can be included in a project or an es2015 module that can be imported into any es6 modules:
+Vanilla currently recreates the following jQuery methods in an es5 JavaScript file that can be included in a project or an es2015 module that can be imported into any es2015 modules:
 
 - `hasClass()`
 - `toggleClass()`
