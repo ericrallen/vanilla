@@ -1,3 +1,4 @@
 node_modules*
+npm-debug.log
 test/es5/js/dist*
 test/es2015/js/dist*
