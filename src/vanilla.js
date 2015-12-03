@@ -40,3 +40,19 @@
         //return reference to `$v` for method chaining
         return this;
     };
+
+    //method for removing a class from elements in collection
+    //1: What if we want the user to be able to pass in as many classes as they want?
+    //2: What if we want the user to be able to pass multiple classes in a single parameter?
+    //3: What if we want the user to be able to do both 1 and 2 above?
+    $v.fn.removeClass = function(classString) {
+        //remove class logic here
+    };
+
+    //method for toggling a class on elements in collection
+    //1: What if we want the user to be able to pass in as many classes as they want?
+    //2: What if we want the user to be able to pass multiple classes in a single parameter?
+    //3: What if we want the user to be able to do both 1 and 2 above?
+    $v.fn.toggleClass = function(classString) {
+        //toggle class logic here
+    };
