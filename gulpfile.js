@@ -30,7 +30,7 @@
     };
 
     gulp.task('clean', function() {
-        return del(['./test/es2015/js/dist', './test/es5/js/dist']);
+        return del(['./test/es2015/js/dist/*', './test/es5/js/dist/*']);
     });
 
     //Start local server
