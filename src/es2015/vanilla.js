@@ -174,8 +174,16 @@
     //1: We will allow the `hasClass()` method to accept any number of parameters
     //2: We will accept space, or comma-delimited lists of class names for each parameter
     $v.fn.hasClass = function(...args) {
-       //initialize empty array for storing the classes we want to add
+        let element;
+
+        //initialize empty array for storing the classes we want to add
         let classes = [];
+
+        //if we were passed an element as our first argument
+        if(args[0] && args[0].nodeName || args[0].tagName) {
+            //remove our element from the args array and store it
+            element = args.shift();
+        }
 
         //iterate through our new args array and split out any comma or space-delimited lists of class names
         args.forEach( (item) => {
@@ -186,14 +194,18 @@
         //we are using `.every()` so that we can break out of the loop when the class is not found on an element
         //we return a boolean from this method, so it is not eligible for any chaining after beng called
         return classes.every( (str) => {
-            //iterate through the elements in our collection
-            return this.elements.every( (item) => {
-                if(this.utils.arrayContains(this.utils.getClassList(item), this.utils.convertSelectorToString(str))) {
-                    return false;
-                }
+            if(!element) {
+                //iterate through the elements in our collection
+                return this.elements.every( (item) => {
+                    if(item.classList.contains(this.utils.convertSelectorToString(str))) {
+                        return false;
+                    }
 
-                return true;
-            });
+                    return true;
+                });
+            } else {
+                return element.classList.contains(this.utils.convertSelectorToString(str));
+            }
         });
     };
 
@@ -210,21 +222,11 @@
             classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
-        //iterate through the classes we need to check for
-        //we are using `.every()` so that we can break out of the loop when the class is not found on an element
+        //iterate through the classes we need to add
         classes.forEach( (str) => {
             //iterate through the elements in our collection
             this.elements.forEach( (item, index, array) => {
-                //get class list
-                //we cache this in it's own variable so we can use it for a push call later on
-                let classList = this.utils.getClassList(item);
-
-                //check to see if our this item already has the class, add it if not
-                if(!this.utils.arrayContains(classList, this.utils.convertSelectorToString(str))) {
-                    classList.push(str);
-
-                    array[index].className = this.utils.createClassList(classList);
-                }
+                array[index].classList.add(this.utils.convertSelectorToString(str));
             });
         });
 
@@ -245,24 +247,11 @@
             classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
-        //iterate through the classes we need to check for
-        //we are using `.every()` so that we can break out of the loop when the class is not found on an element
+        //iterate through the classes we need to remove
         classes.forEach( (str) => {
             //iterate through the elements in our collection
             this.elements.forEach( (item, index, array) => {
-                //get class list
-                //we cache this in it's own variable so we can use it for a splice call later on
-                let classList = this.utils.getClassList(item);
-
-                //check to see if class exists in class list
-                //we cache this in it's own variable so we can use it for a splice call later on
-                const removeIndex = this.utils.arrayContains(classList, str, true);
-
-                //if the specified class was found in this element's class list
-                if(removeIndex !== -1) {
-                    //remove it from the class list
-                    array[index].className = this.utils.createClassList(classList.splice(removeIndex, 1));
-                }
+                array[index].classList.remove(this.utils.convertSelectorToString(str));
             });
         });
 
@@ -283,23 +272,11 @@
             classes = classes.concat(this.utils.convertDelimitedStringToArray(item));
         });
 
-        //iterate through the classes we need to check for
-        //we are using `.every()` so that we can break out of the loop when the class is not found on an element
+        //iterate through the classes we need to toggle
         classes.forEach( (str) => {
+            //iterate through the elements in our collection
             this.elements.forEach( (item, index, array) => {
-                //get class list
-                //we cache this in it's own variable so we can use it for a splice or push call later on
-                let classList = this.utils.getClassList(item);
-
-                //check to see if class exists in class list
-                //we cache this in it's own variable so we can use it for a splice call later on
-                const toggleIndex = this.utils.arrayContains(classList, str, true);
-
-                if(toggleIndex !== -1) {
-                    array[index].className = this.utils.createClassList(classList.push(str));
-                } else {
-                    array[index].className = this.utils.createClassList(classList.splice(toggleIndex, 1));
-                }
+                array[index].classList.toggle(this.utils.convertSelectorToString(str));
             });
         });
 

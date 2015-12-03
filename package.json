@@ -1,6 +1,6 @@
 {
     "name": "vanilla-workshop-demo",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Vanilla JS library we'll use to explore jQuery methods and patterns in some Front End Friday workshops",
     "keywords": [
         "workshop",
