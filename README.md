@@ -1,4 +1,6 @@
-# Vanilla
+# Vanilla v1.1.1
+
+**Note**:  Want to [skip to the Workshop Notes](#workshop-notes)?
 
 Vanilla is a jQuery-like library created for a series of Front-End workshops revolving around JavaScript.
 
@@ -12,13 +14,15 @@ In the workshops we will cover many things, including:
 
 - Fluent Interface Pattern
 - Command Query Separation
+- DRY
 - Prototypal Inheritance
 - `arguments` Object
 - Rest Parameters and Spread Operator
-- `className` property of Element Node Objects
+- `className` and `classList`
 - Array-like Objects
 - Enumerable properties
 - `.querySelectorAll()`
+- Array methods:  `split()`, `join()`, `concat()`, and `indexOf()`
 -  various methods of iteration (and when certain methods are better than others):
     - `forEach`
     - `for`
@@ -26,14 +30,13 @@ In the workshops we will cover many things, including:
     - `every`
     - `some`
 - es2015 and transpiling with `babel`
-- `gulp`
+- task automation with `gulp`
 - How/Why jQuery does certain things:
     - How does method chaining work? (see:  Fluent Interface Pattern)
     - How does plugin extension work? (see:  Prototypal Inheritance)
     - Why the `$`?
     - What is `$.fn` and why do plugins use it?
     - How can plugins override other jQuery methods?
-
 
 ## What Vanilla Does Not Do
 
@@ -49,7 +52,7 @@ Vanilla also does not:
 
 ## What Vanilla Does Do
 
-Vanilla currently recreates the following jQuery methods in an es5 JavaScript file that can be included in a project or an es2015 module that can be imported into any es6 modules:
+Vanilla currently recreates the following jQuery methods in an es5 JavaScript file that can be included in a project or an es2015 module that can be imported into any es2015 modules:
 
 - `hasClass()`
 - `toggleClass()`
@@ -59,3 +62,35 @@ Vanilla currently recreates the following jQuery methods in an es5 JavaScript fi
 - `data()`
 - `extend()`
 - `find()`
+
+<a href="javascript:void(0);" id="workshop-notes" name="workshop-notes"></a>
+## Workshop Notes
+
+#### Table of Contents
+
+1. [Workshop[0]](#workshop-0)
+
+<a href="javascript:void(0);" id="workshop-0" name="workshop-0"></a>
+### Workshop[0]:  Classy jQuery
+
+The first in our series of workshops is an introduction to the basics of how jQuery is designed and how we can recreate that design on our own.
+
+We also delve into jQuery's class convenience methods and recreate them for ourselves.
+
+**Presentation**:  [https://slides.com/allenericr/workshop-0-classy-jquery/](https://slides.com/allenericr/workshop-0-classy-jquery/)
+
+**Branch**:  `workshop/0`
+
+**Topics**:
+
+- [x] Fluent Interface Pattern (*method chaining*)
+- [x] DRY
+- [x] `arguments`
+- [x] Prototypal Inheritance
+- [x] `className` and `classList`
+- [x] Array-like Objects
+- [x] `querySelectorAll()`
+- [x] `split()`, `join()`, and `indexOf()`
+- [x] Why `$`?
+- [x] Why `$.fn`?
+- [x] `hasClass()`, `addClass()`, `toggleClass()`, `removeClass()`
