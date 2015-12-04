@@ -63,6 +63,11 @@ Vanilla currently recreates the following jQuery methods in an es5 JavaScript fi
 - `extend()`
 - `find()`
 
+## Helpful Resources
+
+- jQuery Source Viewer: [http://james.padolsey.com/jquery/](http://james.padolsey.com/jquery/)
+
+
 <a href="javascript:void(0);" id="workshop-notes" name="workshop-notes"></a>
 ## Workshop Notes
 
