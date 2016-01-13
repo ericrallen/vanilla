@@ -102,13 +102,11 @@ We also delve into jQuery's class convenience methods and recreate them for ours
 - [x] `hasClass()`, `addClass()`, `toggleClass()`, `removeClass()`
 
 <a href="javascript:void(0);" id="workshop-1" name="workshop-1"></a>
-### Workshop[1]:  Classy jQuery
+### Workshop[1]:  Objects & Attributes
 
-The first in our series of workshops is an introduction to the basics of how jQuery is designed and how we can recreate that design on our own.
+The second in our series of workshops is an introduction to the how jQuery deals with attributes, extends objects, and why you should be using `.find()`.
 
-We also delve into jQuery's class convenience methods and recreate them for ourselves.
-
-**Presentation**:  [https://slides.com/allenericr/workshop-1-attributes/](https://slides.com/allenericr/workshop-1-attributes/)
+**Presentation**:  [https://slides.com/allenericr/workshop-1-objects-attributes](https://slides.com/allenericr/workshop-1-objects-attributes)
 
 **Branch**:  `workshop/1`
 
