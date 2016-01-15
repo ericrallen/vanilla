@@ -8,9 +8,15 @@ We'll be using it as a way to explain what jQuery is doing under the covers and 
 
 This fairly close to final version of the library contains some potential improvements to the way that jQuery handles some of the methods we recreate and some small quality-of-life updates that make the library easy to work with as a developer.
 
+As the Workshop series progresses, we'll be expanding Vanilla out to explore concepts from other frameworks, libraries, etc.
+
 ## Concepts We Will Cover in the Workshops
 
-In the workshops we will cover many things, including:
+In the workshops we will be coverig a wide array of JavaScript topics with some information that developers of almost every level will find useful. Some slides are geared more towards those less familiar with JavaScript, while others are geared towards those who are very familiar with it but might not know about how it handles some specific method or situation.
+
+We'll be doing our best to make sure that there is something in this for everyone.
+
+**Random assortment of topics that are covered or will *very likely* be covered**:
 
 - Fluent Interface Pattern
 - Command Query Separation
@@ -22,13 +28,11 @@ In the workshops we will cover many things, including:
 - Array-like Objects
 - Enumerable properties
 - `.querySelectorAll()`
-- Array methods:  `split()`, `join()`, `concat()`, and `indexOf()`
+- Array methods:  `split()`, `join()`, `concat()`,`indexOf()`, `.forEach()`, `.every()`, `.some()`
 -  various methods of iteration (and when certain methods are better than others):
-    - `forEach`
-    - `for`
-    - `for..in`
-    - `every`
-    - `some`
+    - `for()`
+    - `for..in()`
+    - `while()`
 - es2015 and transpiling with `babel`
 - task automation with `gulp`
 - How/Why jQuery does certain things:
@@ -37,6 +41,15 @@ In the workshops we will cover many things, including:
     - Why the `$`?
     - What is `$.fn` and why do plugins use it?
     - How can plugins override other jQuery methods?
+- Mutability
+- Recursion
+
+**Random assortment of topics that *might* be covered in future Workshops**:
+
+- `{{ something }}` style template tags
+- Two way data binding
+- Design/Module patterns
+- Creating bower/npm packages
 
 ## What Vanilla Does Not Do
 
@@ -96,10 +109,13 @@ We also delve into jQuery's class convenience methods and recreate them for ours
 - [x] Element Node `className` and `classList`
 - [x] Array-like Objects
 - [x] `document.querySelectorAll()`
-- [x] `Array.prototype.split()`, `Array.prototype.join()`, and `Array.prototype.indexOf()`
+- [x] `Array.prototype.split()`, `Array.prototype.join()`, `Array.prototype.indexOf()`, `Array.prototype.forEach()`
+- [x] `for()` loops
+- [x] `Function.prototype.call()`
 - [x] Why `$`?
 - [x] Why `$.fn`?
 - [x] `jQuery.fn.hasClass()`, `jQuery.fn.addClass()`, `jQuery.fn.toggleClass()`, `jQuery.fn.removeClass()`
+- [x] Object Literal
 
 <a href="javascript:void(0);" id="workshop-1" name="workshop-1"></a>
 ### Workshop[1]:  Objectifying Truthiness
