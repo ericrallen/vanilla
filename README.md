@@ -73,8 +73,8 @@ Vanilla currently recreates the following jQuery methods in an es5 JavaScript fi
 
 #### Table of Contents
 
-1. [Workshop[0]](#workshop-0)
-1. [Workshop[1]](#workshop-1)
+1. [Workshop[0]: Classy jQuery](#workshop-0)
+1. [Workshop[1]: Objectifying Truthiness](#workshop-1)
 
 <a href="javascript:void(0);" id="workshop-0" name="workshop-0"></a>
 ### Workshop[0]:  Classy jQuery
@@ -102,11 +102,13 @@ We also delve into jQuery's class convenience methods and recreate them for ours
 - [x] `hasClass()`, `addClass()`, `toggleClass()`, `removeClass()`
 
 <a href="javascript:void(0);" id="workshop-1" name="workshop-1"></a>
-### Workshop[1]:  Objects & Attributes
+### Workshop[1]:  Objectifying Truthiness
 
 The second in our series of workshops is an introduction to the how jQuery deals with attributes, extends objects, and why you should be using `.find()`.
 
-**Presentation**:  [https://slides.com/allenericr/workshop-1-objects-attributes](https://slides.com/allenericr/workshop-1-objects-attributes)
+It builds off of knowledge gained in [Workshop[0]](#workshop-0), but does not directly require anything from it.
+
+**Presentation**:  [https://slides.com/allenericr/workshop-1-objectifying-truthiness](https://slides.com/allenericr/workshop-1-objectifying-truthiness)
 
 **Branch**:  `workshop/1`
 
@@ -114,8 +116,17 @@ The second in our series of workshops is an introduction to the how jQuery deals
 
 - [x] Command Query Separation
 - [x] Boolean Attributes
+- [x] Object Property Options
 - [x] Shallow vs Deep Merge/Copy
-- [x] `Array.prototype.shift()`
+- [x] Mutation
+- [x] `Array.prototype.shift()`, `Array.prototype.concat()`
 - [x] Why `$.extend`?
 - [x] `extend()`, `attr()`, `prop()`, `data()`, `find()`
+- [x] Ternary Operators
+- [x] Recursion
+- [x] `for...in()` loops
+- [x] `Object.prototype.hasOwnProperty()`, `Object.prototype.keys()`
 - [x] Why use `.find()`?
+- [x] Truthy and Falsey
+- [x] Type Coercion
+- [x] `==` vs `===`
