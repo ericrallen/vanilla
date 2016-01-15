@@ -91,15 +91,15 @@ We also delve into jQuery's class convenience methods and recreate them for ours
 
 - [x] Fluent Interface Pattern (*method chaining*)
 - [x] DRY
-- [x] `arguments`
+- [x] Function `arguments`
 - [x] Prototypal Inheritance
-- [x] `className` and `classList`
+- [x] Element Node `className` and `classList`
 - [x] Array-like Objects
-- [x] `querySelectorAll()`
-- [x] `split()`, `join()`, and `indexOf()`
+- [x] `document.querySelectorAll()`
+- [x] `Array.prototype.split()`, `Array.prototype.join()`, and `Array.prototype.indexOf()`
 - [x] Why `$`?
 - [x] Why `$.fn`?
-- [x] `hasClass()`, `addClass()`, `toggleClass()`, `removeClass()`
+- [x] `jQuery.fn.hasClass()`, `jQuery.fn.addClass()`, `jQuery.fn.toggleClass()`, `jQuery.fn.removeClass()`
 
 <a href="javascript:void(0);" id="workshop-1" name="workshop-1"></a>
 ### Workshop[1]:  Objectifying Truthiness
@@ -121,7 +121,8 @@ It builds off of knowledge gained in [Workshop[0]](#workshop-0), but does not di
 - [x] Mutation
 - [x] `Array.prototype.shift()`, `Array.prototype.concat()`
 - [x] Why `$.extend`?
-- [x] `extend()`, `attr()`, `prop()`, `data()`, `find()`
+- [x] `jQuery.extend()`, `jQuery.fn.attr()`, `jQuery.fn.prop()`, `jQuery.fn.data()`, `jQuery.fn.find()`
+- [x] Difference between `jQuery.fn.extend()` and `jQuery.extend()`?
 - [x] Ternary Operators
 - [x] Recursion
 - [x] `for...in()` loops
